@@ -5,20 +5,10 @@ from weather import get_weather
 app = Flask(__name__)
 
 @app.route('/')
-def hello():
-    name = request.args.get('name', 'World')
-    return f'hello {name}!'
-
-
-@app.route('/users')
-def users():
+def show_weather():
     conn = sqlite3.connect('base.db')
     c = conn.cursor()
-    weather_dict = get_weather("Falun")
-    city = weather_dict[0]
-    temp = weather_dict[1]
-    pressure = weather_dict[2]
-    humidity = weather_dict[3]
+    weather_list = get_weather("Falun")
     c.execute('''DROP TABLE IF EXISTS weather_table''')
     c.execute('''CREATE TABLE IF NOT EXISTS weather_table (
     city VARCHAR(32) NOT NULL,
@@ -26,7 +16,7 @@ def users():
     pressure INTEGER NOT NULL,
     humidity INTEGER NOT NULL)''')
     c.execute('''INSERT INTO weather_table(city, temperature, pressure, humidity)
-        VALUES(?, ?, ?, ?)''', (city, temp, pressure, humidity))
+        VALUES(?, ?, ?, ?)''', weather_list)
     c.execute('''SELECT city, temperature, pressure, humidity FROM weather_table''')
     weather = c.fetchall()
     return jsonify(weather)

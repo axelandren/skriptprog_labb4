@@ -10,10 +10,7 @@ def get_weather(city):
     r = response.json()
     if r["cod"] != "404":
         x = r["main"]
-        temp = x["temp"]
-        pressure = x["pressure"]
-        humidity = x["humidity"]
-        weather_dict = [city, temp, pressure, humidity]
+        weather_dict = [city, x["temp"], x["pressure"], x["humidity"]]
         print(weather_dict)
         return weather_dict
     else:

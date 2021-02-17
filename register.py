@@ -3,14 +3,14 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def form():
+    return render_template('form.html')
 
 
-@app.route('/register', methods=['POST'])
-def register():
-    register_dict = request.form.to_dict()
-    return register_dict
+@app.route('/info', methods=['POST'])
+def info():
+    response = request.form
+    return render_template('info.html', information=response)
 
 if __name__ == '__main__':
     app.run(debug=True)
