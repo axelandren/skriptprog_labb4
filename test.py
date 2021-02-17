@@ -9,7 +9,6 @@ def show_weather():
     conn = sqlite3.connect('base.db')
     c = conn.cursor()
     weather_list = get_weather("Falun")
-    c.execute('''DROP TABLE IF EXISTS weather_table''')
     c.execute('''CREATE TABLE IF NOT EXISTS weather_table (
     city VARCHAR(32) NOT NULL,
     temperature INTEGER NOT NULL,
